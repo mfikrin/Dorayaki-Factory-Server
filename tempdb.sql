@@ -9,7 +9,7 @@ CREATE DATABASE factorydb;
 DROP TABLE IF EXISTS bahan;
 CREATE TABLE bahan(
     bahan_id SERIAL NOT NULL UNIQUE PRIMARY KEY,
-    bahan_name VARCHAR(255) NOT NULL,
+    bahan_name VARCHAR(255) UNIQUE NOT NULL,
     bahan_qty INTEGER NOT NULL
 );
 
@@ -35,5 +35,7 @@ CREATE TABLE users(
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL
 );
+
+INSERT INTO users (username,email,password) VALUES ('admin','shokomakinohara10@gmail.com','ayaya');
 
 -- will add request + log later on
