@@ -5,6 +5,7 @@ const db = require("./dbconfig");
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const authJWT = require("./authFunc");
+const resp = require('./nestedJSON');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -82,6 +83,34 @@ app.post("/users", async (req, res) => {
   });
 
 // TBA : Request Management - pake soap keknya
+// List request buat admin lihat di pabrik
+app.get('/request',authJWT,async (req,res)=>{
+    try {
+        var que = await db.query(
+          "SELECT * FROM request",
+        );
+    
+        res.json(que.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+// Update status list request (dari admin pabrik)
+app.put('/requestUpdate',authJWT,async (req,res)=>{
+    try{
+        var request_id = req.body.request_id;
+        var status = req.body.status;
+        var que = await db.query(
+            "UPDATE request SET status=($1) WHERE request_id=($2) RETURNING *",
+            [status, request_id]
+        );
+      
+        res.json(que.rows[0]);
+    } catch (err){
+        console.error(err.message);
+    }
+
+});
 
 // ========= MANAJEMEN BAHAN
 
@@ -145,7 +174,35 @@ app.put("/bahan/:id",authJWT, async(req,res)=>{
 //     }
 // });
 
+// Melihat daftar resep dan isinya
+app.get('/resepList',authJWT,async (req,res)=>{
+    try{
+        var que = await db.query(
+            "SELECT * FROM resep",
+          );
+      
+          resp.nestedJSON(que.rows,res);
+    } catch(err){
+        console.error(err.message);
+    }
+});
+// Add resep baru
+app.post('/resep',authJWT,async (req,res)=>{
+    try {
+        var bahan_id = req.body.bahan_id;
+        var dora_id = req.body.dora_id;
+        var resep_qty = req.body.resep_qty;
 
+        var que = await db.query(
+            "INSERT INTO resep (bahan_id, dora_id, resep_qty) VALUES($1,$2,$3) RETURNING *",
+            [bahan_id, dora_id, resep_qty]
+          );
+      
+          res.json(que.rows[0]);
+    } catch(err) {
+        console.error(err.message);
+    }
+});
 
 app.listen(5000, () => {
     console.log("server has started on port 5000");
