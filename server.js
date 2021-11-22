@@ -59,7 +59,7 @@ app.post('/token', (req, res) => {
     });
 });
 
-app.post('/logout', (req, res) => {
+app.post('/logout',authJWT, async (req, res) => {
     const { token } = req.body;
     refArray = refArray.filter(t => t !== token);
     res.send("Logout successful");

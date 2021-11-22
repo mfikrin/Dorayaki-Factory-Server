@@ -16,7 +16,7 @@ CREATE TABLE bahan(
 DROP TABLE IF EXISTS dora;
 CREATE TABLE dora(
     dora_id SERIAL NOT NULL UNIQUE PRIMARY KEY,
-    dora_name VARCHAR(255) NOT NULL,
+    dora_name VARCHAR(255) NOT NULL
 );
 
 DROP TABLE IF EXISTS resep;
@@ -51,6 +51,7 @@ CREATE TABLE request_log(
     request_id INTEGER NOT NULL,
     ip VARCHAR(100) NOT NULL,
     timestamp_req TIMESTAMP NOT NULL, 
+    epoint VARCHAR(100) NOT NULL,
     CONSTRAINT fklog FOREIGN KEY(request_id) REFERENCES request(request_id)
 );
 
@@ -62,9 +63,10 @@ INSERT INTO dora (dora_name) VALUES ('Jeruk');
 
 INSERT INTO resep (bahan_id, dora_id, resep_qty) VALUES (1,1,30);
 
-INSERT INTO request (dora_id, req_qty, status) VALUES (1,5,'Pending');
+INSERT INTO request (dora_id, req_qty, status) VALUES (1,5,'pending');
+INSERT INTO request (dora_id, req_qty, status) VALUES (1,10,'pending');
 
-INSERT INTO request_log (request_id, ip, timestamp_req) VALUES (1,'123.123.123','2021-11-19 06:45:10');
+INSERT INTO request_log (request_id, ip, timestamp_req,epoint) VALUES (1,'123.123.123','2021-11-22 06:45:10','request');
 
 
 -- will add request + log later on

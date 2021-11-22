@@ -8,3 +8,8 @@ Backend Pabrik, REST + NodeJS
 ## Endpoint, Response, Payload
 
 ## Pembagian Tugas
+
+## How to Run
+```
+node server.js
+```
