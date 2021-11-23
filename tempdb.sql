@@ -60,13 +60,14 @@ INSERT INTO users (username,email,password) VALUES ('admin','shokomakinohara10@g
 INSERT INTO bahan (bahan_name, bahan_qty) VALUES ('Tepung',100);
 
 INSERT INTO dora (dora_name) VALUES ('Jeruk');
+INSERT INTO dora (dora_name) VALUES ('Stroberi');
 
 INSERT INTO resep (bahan_id, dora_id, resep_qty) VALUES (1,1,30);
 
-INSERT INTO request (dora_id, req_qty, status) VALUES (1,5,'pending');
-INSERT INTO request (dora_id, req_qty, status) VALUES (1,10,'pending');
+-- INSERT INTO request (dora_id, req_qty, status) VALUES (1,5,'pending');
+-- INSERT INTO request (dora_id, req_qty, status) VALUES (1,10,'pending');
 
-INSERT INTO request_log (request_id, ip, timestamp_req,epoint) VALUES (1,'123.123.123','2021-11-22 06:45:10','request');
+-- INSERT INTO request_log (request_id, ip, timestamp_req,epoint) VALUES (1,'123.123.123','2021-11-22 06:45:10','request');
 
 
 -- will add request + log later on
