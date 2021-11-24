@@ -4,7 +4,7 @@
 DROP DATABASE IF EXISTS factorydb;
 CREATE DATABASE factorydb;
 
--- \c factorydb
+\c factorydb
 
 DROP TABLE IF EXISTS bahan;
 CREATE TABLE bahan(

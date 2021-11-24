@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const authJWT = require("./authFunc");
 const resp = require('./nestedJSON');
+const nodemailer = require("nodemailer");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -16,6 +17,7 @@ const accesstoken = 'hv0DyfMXoJd0fhB8pPtxOr6Czg1F3TtMBH8JZbFVadx5dMKCB5HRmuh9sH7
 const refreshtoken = 'f1u3A85OdpdmJE6uaLAZVofkNde06GBXoe9es1yKN16rKPdsqWYuKDICAy90qM0g3N0j2HzY5tHpwCL9'
 
 var refArray = [];
+var uname = '';
 
 app.post('/login',async (req,res)=>{
     try{
@@ -30,6 +32,7 @@ app.post('/login',async (req,res)=>{
             const accToken = jwt.sign({username : username},accesstoken,{expiresIn:'24h'});
             const refToken = jwt.sign({username : username},refreshtoken);
             refArray.push(refToken);
+            uname = username;
             res.json({accToken,refToken});
         }
         else{
@@ -203,6 +206,46 @@ app.post('/resep',authJWT,async (req,res)=>{
         console.error(err.message);
     }
 });
+
+
+// Endpoint buat Java Interface
+
+// Send Notif ke email
+app.post('/reqdor',async(req,res)=>{
+    var em =  'shokomakinohara10@gmail.com';
+    
+    try{
+        var {msg} = req.body;
+        res.json(msg);
+        var teks = msg + '. More at http://localhost:3000/report';
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: 'stoccnots@gmail.com',
+              pass: 'Giantsun420' 
+            }
+          });
+          
+          const mailOptions = {
+            from: '"Stock Request Notifier" <stoccnots@gmail.com>',
+            to: em,
+            subject: 'Dorayaki Stock Request',
+            text: teks
+          };
+          
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
+    }
+    catch(err){
+        console.error(err.message);
+    }
+}
+);
 
 app.listen(5000, () => {
     console.log("server has started on port 5000");
