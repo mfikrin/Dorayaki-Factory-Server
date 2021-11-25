@@ -93,7 +93,11 @@ app.get('/request',authJWT,async (req,res)=>{
         var que = await db.query(
           "SELECT r.request_id,d.dora_name,r.req_qty,r.status,rl.ip,rl.timestamp_req FROM dora as d,request as r,request_log as rl where d.dora_id=r.dora_id and r.request_id=rl.request_id and r.status='pending'",
         );
-    
+        que.rows.forEach(e => {
+            e.timestamp_req = e.timestamp_req.toString().toString();
+            // var tm2 = tm.replace('T',' ');
+            e.timestamp_req = e.timestamp_req.replace(' GMT+0700 (Western Indonesia Time)','');
+        });
         res.json(que.rows);
     } catch (err) {
         console.error(err.message);
