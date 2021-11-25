@@ -142,6 +142,28 @@ app.get("/bahan", authJWT, async(req,res)=>{
         console.error(err.message);
     }
 });
+// Lihat bahan Spesifik
+app.get("/bahan/:bahan_name", authJWT, async(req,res)=>{
+    try{
+        var bahan_name = req.params.bahan_name;
+        var que = await db.query("SELECT * from bahan WHERE bahan_name=$1", [bahan_name]);
+        res.json(que.rows[0]);
+    }
+    catch (err) {
+        console.error(err.message);
+    }
+});
+// Lihat bahan Spesifik
+app.get("/bahanName/:bahan_id", authJWT, async(req,res)=>{
+    try{
+        var bahan_id = req.params.bahan_id;
+        var que = await db.query("SELECT * from bahan WHERE bahan_id=$1", [bahan_id]);
+        res.json(que.rows[0]);
+    }
+    catch (err) {
+        console.error(err.message);
+    }
+});
 // Update bahan - quantity
 app.put("/bahan/:id",authJWT, async(req,res)=>{
     try{
@@ -184,6 +206,31 @@ app.post('/resep',authJWT,async (req,res)=>{
       
           res.json(que.rows[0]);
     } catch(err) {
+        console.error(err.message);
+    }
+});
+
+// Dorayaki
+
+// Mendapatkan Dorayaki berdasar nama
+app.get("/dora/:dora_name",authJWT, async(req,res)=>{
+    try{
+        var dora_name = req.params.dora_name;
+        var que = await db.query("SELECT * from dora WHERE dora_name=$1",[dora_name]);
+        res.json(que.rows[0]);
+    }
+    catch (err) {
+        console.error(err.message);
+    }
+});
+// Mendapatkan Dorayaki berdasar ID
+app.get("/doraName/:dora_id", authJWT, async(req,res)=>{
+    try{
+        var dora_id = req.params.dora_id;
+        var que = await db.query("SELECT * from dora WHERE dora_id=$1",[dora_id]);
+        res.json(que.rows[0]);
+    }
+    catch (err) {
         console.error(err.message);
     }
 });
