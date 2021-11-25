@@ -91,7 +91,7 @@ app.post("/users", async (req, res) => {
 app.get('/request',authJWT,async (req,res)=>{
     try {
         var que = await db.query(
-          "SELECT d.dora_name,r.req_qty,r.status,rl.ip,rl.timestamp_req FROM dora as d,request as r,request_log as rl where d.dora_id=r.dora_id and r.request_id=rl.request_id and r.status='pending'",
+          "SELECT r.request_id,d.dora_name,r.req_qty,r.status,rl.ip,rl.timestamp_req FROM dora as d,request as r,request_log as rl where d.dora_id=r.dora_id and r.request_id=rl.request_id and r.status='pending'",
         );
     
         res.json(que.rows);
@@ -100,7 +100,7 @@ app.get('/request',authJWT,async (req,res)=>{
     }
 });
 // Update status list request (dari admin pabrik)
-app.put('/requestUpdate',authJWT,async (req,res)=>{
+app.put('/request',authJWT,async (req,res)=>{
     try{
         var request_id = req.body.request_id;
         var status = req.body.status;
