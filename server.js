@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const authJWT = require("./authFunc");
 const resp = require('./nestedJSON');
 const nodemailer = require("nodemailer");
+// const db = require('./factoryDB')
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -157,28 +158,8 @@ app.put("/bahan/:id",authJWT, async(req,res)=>{
 
 // =========== Manajemen Resep
 
-// Add resep
-// app.post("/resep",async(req,res)=>{
-//     try{
-//         var dora = req.body.dora;
-//         var 
-//         var qty = req.body.qty;
-//         var que1 = await db.query(
-//             "INSERT INTO dora(dora_name) VALUES($1,$2) RETURNING *",
-//             [dora]);
-//         var que2 = await db.query(
-//             "INSERT INTO bahan(bahan_id) VALUES($1,$2) RETURNING *",
-//             [name]);
-
-//         res.json(que1.rows[0]);
-//     }
-//     catch (err) {
-//     console.error(err.message);
-//     }
-// });
-
 // Melihat daftar resep dan isinya
-app.get('/resepList',authJWT,async (req,res)=>{
+app.get('/resep',authJWT,async (req,res)=>{
     try{
         var que = await db.query(
             "SELECT * FROM resep",
