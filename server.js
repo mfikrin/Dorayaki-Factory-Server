@@ -91,7 +91,7 @@ app.post("/users", async (req, res) => {
 app.get('/request',authJWT,async (req,res)=>{
     try {
         var que = await db.query(
-          "SELECT * FROM request",
+          "SELECT d.dora_name,r.req_qty,r.status,rl.ip,rl.timestamp_req FROM dora as d,request as r,request_log as rl where d.dora_id=r.dora_id and r.request_id=rl.request_id and r.status='pending'",
         );
     
         res.json(que.rows);
