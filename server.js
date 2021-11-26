@@ -208,6 +208,18 @@ app.get('/resep',authJWT,async (req,res)=>{
         console.error(err.message);
     }
 });
+
+// Lihat resep Spesifik
+app.get("/resep/:id", authJWT, async(req,res)=>{
+    try{
+        var {id} = req.params;   
+        var que = await db.query("SELECT dora_name, bahan_name, resep_qty FROM resep AS re, bahan as ba, dora as d WHERE re.dora_id=d.dora_id AND re.bahan_id=ba.bahan_id AND d.dora_id=$1", [id]);
+        res.json(que.rows);
+    }
+    catch (err) {
+    console.error(err.message);
+    }
+});
 // Add resep baru
 app.post('/resep',authJWT,async (req,res)=>{
     try {
@@ -222,6 +234,18 @@ app.post('/resep',authJWT,async (req,res)=>{
       
           res.json(que.rows[0]);
     } catch(err) {
+        console.error(err.message);
+    }
+});
+// Melihat daftar dorayaki name dan dora id di resep
+app.get('/resepdora',authJWT,async (req,res)=>{
+    try{
+        var que = await db.query(
+            "SELECT DISTINCT(dora_id), dora_name FROM resep NATURAL INNER JOIN dora ORDER BY dora_id",
+          );
+      
+          res.json(que.rows);
+    } catch(err){
         console.error(err.message);
     }
 });
