@@ -196,6 +196,18 @@ app.get('/resep',authJWT,async (req,res)=>{
         console.error(err.message);
     }
 });
+
+// Lihat resep Spesifik
+app.get("/resep/:id", authJWT, async(req,res)=>{
+    try{
+        var {id} = req.params;   
+        var que = await db.query("SELECT * from resep WHERE dora_id=$1", [id]);
+        res.json(que.rows);
+    }
+    catch (err) {
+    console.error(err.message);
+    }
+});
 // Add resep baru
 app.post('/resep',authJWT,async (req,res)=>{
     try {
