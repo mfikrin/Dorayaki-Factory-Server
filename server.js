@@ -172,7 +172,7 @@ app.get("/bahanut/:bahan_id", authJWT, async(req,res)=>{
     try{
         var bahan_id = req.params.bahan_id;
         var que = await db.query("SELECT bahan_name,bahan_qty FROM bahan WHERE bahan_id = $1",[bahan_id]);
-        res.json(que.rows);
+        res.json(que.rows[0]);
     }
     catch (err) {
         console.error(err.message);
