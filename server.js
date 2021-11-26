@@ -225,6 +225,18 @@ app.post('/resep',authJWT,async (req,res)=>{
         console.error(err.message);
     }
 });
+// Melihat daftar dorayaki name dan dora id di resep
+app.get('/resepdora',authJWT,async (req,res)=>{
+    try{
+        var que = await db.query(
+            "SELECT DISTINCT(dora_id), dora_name FROM resep NATURAL INNER JOIN dora ORDER BY dora_id",
+          );
+      
+          res.json(que.rows);
+    } catch(err){
+        console.error(err.message);
+    }
+});
 
 // Dorayaki
 
