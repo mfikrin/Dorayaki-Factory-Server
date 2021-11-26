@@ -45,25 +45,36 @@ request_log(log_id,request_id,ip,timestamp_req,epoint)
 
 ## Pembagian Tugas
 - Autentikasi dengan JWT : 13519018
-- Menerima fetch data request dari interface pabrik (java servlet) : 13519018
 - Menerima/menolak request pengubahan stok dari interface pabrik (java servlet) : 13519018
 - Membuat resep varian baru : 13519018
-- Menerima request dari interface pabrik (java servlet) dan mengirimkan notifikasi email : 13519018 
+- Mengirimkan notifikasi email ketika mendapat request perubahan stok dari interface pabrik: 13519018 
+- Mengubah stok bahan : 13519018,13519091
+- Menambah bahan baru : 13519018,13519069,13519091
+- Melihat daftar resep, daftar resep berdasarkan ID : 13519091
+- Menambah resep baru : 13519069, 13519091
+- Melihat detail resep : 13519069, 13519091
+- Melihat daftar varian dorayaki (termasuk berdasarkan ID dan nama) : 13519091
+- Melihat semua daftar bahan, daftar bahan berdasar ID dan Nama : 13519069, 13519091
+- Melihat detail bahan : 13519069, 13519091
+- Melihat daftar request ke admin pabrik : 13519018, 13519091
+
 
 ## Requirements
 1. [nodejs](https://nodejs.org/en/download/)
 2. [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm/)
 3. [expressjs](https://expressjs.com/en/starter/installing.html)
+4. [postgresql](https://www.postgresql.org/download/)
 
 ## Cara Menjalankan
 0. Pastikan requirements terpenuhi
-1. Jalankan console di direktori aplikasi (dorayaki-factory-server)
-2. Pada console, jalankan command berikut untuk menginstal dependency :
+1. Copy Paste Query pada file tempdb.sql ke postgresql lokal, membuat basis data
+2. Jalankan console di direktori aplikasi (dorayaki-factory-server)
+3. Pada console, jalankan command berikut untuk menginstal dependency :
    ```
    npm install
    ```
-3. Setelah dependency terinstal, jalankan :
+4. Setelah dependency terinstal, jalankan :
    ```
    node server.js
    ```
-4. Server akan berjalan pada `http://localhost:5000`
+5. Server akan berjalan pada `http://localhost:5000`
