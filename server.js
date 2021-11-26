@@ -201,7 +201,7 @@ app.get('/resep',authJWT,async (req,res)=>{
 app.get("/resep/:id", authJWT, async(req,res)=>{
     try{
         var {id} = req.params;   
-        var que = await db.query("SELECT * from resep WHERE dora_id=$1", [id]);
+        var que = await db.query("SELECT dora_name, bahan_name, resep_qty FROM resep AS re, bahan as ba, dora as d WHERE re.dora_id=d.dora_id AND re.bahan_id=ba.bahan_id AND d.dora_id=$1", [id]);
         res.json(que.rows);
     }
     catch (err) {
