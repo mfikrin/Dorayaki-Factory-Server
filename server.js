@@ -221,7 +221,13 @@ app.get("/dora/:dora_name",authJWT, async(req,res)=>{
     try{
         var dora_name = req.params.dora_name;
         var que = await db.query("SELECT * from dora WHERE dora_name=$1",[dora_name]);
-        res.json(que.rows[0]);
+        if(que.rows.length!=0){
+            res.json(que.rows[0]);
+        }
+        else{
+            res.json({"dora_id":-1,"dora_name":"null"});
+        }
+        
     }
     catch (err) {
         console.error(err.message);
@@ -239,6 +245,17 @@ app.get("/doraName/:dora_id", authJWT, async(req,res)=>{
     }
 });
 
+app.post("/dora",authJWT,async(req,res)=>{
+    try{
+        var dora_name = req.body.namae;
+        var que = await db.query("INSERT INTO dora(dora_name) VALUES($1) RETURNING dora_id",[dora_name]);
+        res.json(que.rows[0]);
+
+    }
+    catch(err){
+        console.error(err.message);
+    }
+})
 
 // Endpoint buat Java Interface
 
