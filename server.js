@@ -168,13 +168,25 @@ app.get("/bahanName/:bahan_id", authJWT, async(req,res)=>{
         console.error(err.message);
     }
 });
-// Update bahan - quantity
-app.put("/bahan/:id",authJWT, async(req,res)=>{
+app.get("/bahanut/:bahan_id", authJWT, async(req,res)=>{
     try{
-        var {id} = req.params;
-        var qty = req.body.qty;
+        var bahan_id = req.params.bahan_id;
+        var que = await db.query("SELECT bahan_name,bahan_qty FROM bahan WHERE bahan_id = $1",[bahan_id]);
+        res.json(que.rows);
+    }
+    catch (err) {
+        console.error(err.message);
+    }
+});
+// Update bahan - quantity
+app.put("/bahan/:bahan_id",authJWT, async(req,res)=>{
+    try{
+        var id = req.params.bahan_id;
+        id = parseInt(id);
+        var bahan_qty = req.body.bahan_qty;
         var que = await db.query(
-            "UPDATE bahan SET bahan_qty = $1 WHERE bahan_id = $2",[qty,id]);
+            "UPDATE bahan SET bahan_qty = bahan_qty + $1 WHERE bahan_id = $2 RETURNING bahan_name",[bahan_qty,id]);
+        // res.json(que.rows[0]);
         res.json(que.rows[0]);
     }
     catch (err) {
