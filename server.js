@@ -125,8 +125,8 @@ app.put('/request',authJWT,async (req,res)=>{
 // Add bahan
 app.post("/bahan",authJWT, async(req,res)=>{
     try{
-        var name = req.body.name;
-        var qty = req.body.qty;
+        var name = req.body.bahan_name;
+        var qty = req.body.bahan_qty;
         var que = await db.query(
             "INSERT INTO bahan(bahan_name,bahan_qty) VALUES($1,$2) RETURNING *",
             [name,qty]);
